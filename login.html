@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Agency T&J</title>
+    <link href="assets/img2/icon.png" rel="icon">
+    <link rel="stylesheet" href="styleL.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Inicio de sesión</h1>
+        <form id="loginForm" method="post">
+            <div class="username">
+                <input id="usernameInput" type="text" required>
+                <label id="usernameLabel">Nombre de usuario</label>
+            </div>
+            <div class="contrasena">
+                <input id="passwordInput" type="password" required>
+                <label id="passwordLabel">Contraseña</label>
+            </div>
+            <input type="submit" value="Iniciar">
+            <div class="registrarse">
+                ¿No tienes cuenta? <a href="registro.html">Registrarse</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Ocultar etiquetas al ingresar texto
+            $("#usernameInput, #passwordInput").on("input", function() {
+                var $input = $(this);
+                var $label = $input.siblings("label");
+    
+                if ($input.val().trim() !== "") {
+                    $label.hide();
+                } else {
+                    $label.show();
+                }
+            });
+    
+            // Manejar envío del formulario
+            $("#loginForm").on("submit", function(event) {
+                event.preventDefault();
+    
+                var username = $("#usernameInput").val().trim();
+                var password = $("#passwordInput").val().trim();
+    
+                if (username !== "" && password !== "") {
+                    window.location.href = "index.html";
+                } else {
+                    alert("Por favor, complete ambos campos para iniciar sesión.");
+                }
+            });
+        });
+    </script>
+    
+    <script>
+        const form = document.getElementById('loginForm');
+        const usersArray = JSON.parse(localStorage.getItem('users')) || [];
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Buscar el usuario en el array
+            const user = usersArray.find(user => user.username === username || user.email === username);
+
+            if (user && user.password === password) {
+                // Iniciar sesión exitoso
+                alert('Inicio de sesión exitoso');
+                // Aquí puedes redirigir al usuario a otra página o realizar otras acciones
+            } else {
+                // Credenciales incorrectas
+                alert('Nombre de usuario o contraseña incorrectos');
+            }
+
+            // Redirigir a la página de inicio
+            window.location.href = 'index.html';
+        });
+
+    </script>
+</body>
+</html>
